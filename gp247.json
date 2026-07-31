@@ -7,9 +7,9 @@
     "configGroup": "Plugins",
     "configCode": "Total",
     "configKey": "ShopDiscount",
-    "version": "1.1",
+    "version": "2.0",
     "requireCore": ["2.0"],
-    "requireUpdateFrom": "1.0",
+    "requireUpdateFrom": "2.0",
     "requirePackages": ["gp247/shop"],
     "requireExtensions": []
 }
