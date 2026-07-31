@@ -3,7 +3,6 @@
 namespace App\GP247\Plugins\ShopDiscount\Controllers;
 
 use App\GP247\Plugins\ShopDiscount\Models\ShopDiscount;
-use GP247\Shop\Models\ShopOrderTotal;
 use App\GP247\Plugins\ShopDiscount\AppConfig;
 use GP247\Front\Controllers\RootFrontController;
 use Carbon\Carbon;
@@ -260,65 +259,4 @@ class FrontController extends RootFrontController
         return !in_array($new, array_merge($collection, $this->codes));
     }
 
-/**
- * [useDiscount description]
- * @return [type]           [description]
- */
-    public function useDiscount()
-    {
-        $html = '';
-        $code = request('code');
-        $uID = request('uID');
-        $check = $this->check($code, $uID);
-        if ($check['error'] == 1) {
-            $error = 1;
-            $msg = $check['msg'];
-        } else {
-            $content = $check['content'];
-            if ($content['type'] === 1) {
-                //Point use in my page
-                $error = 1;
-                $msg = gp247_language_render($this->plugin->appPath.'::lang.process.not_allow');
-            } else {
-                $error = 0;
-                $msg = gp247_language_render($this->plugin->appPath.'::lang.process.completed');
-
-                //Set session discount
-                $totalMethod = session('totalMethod',[]);
-                $totalMethod[$this->plugin->configKey] = $code;
-                session(['totalMethod' => $totalMethod]);
-
-                $objects = ShopOrderTotal::getObjectOrderTotal();
-                $dataTotal = ShopOrderTotal::processDataTotal($objects);
-
-                $subPath = 'common.shop_render_total';
-                $view = gp247_shop_process_view($this->GP247TemplatePath,$subPath);
-                if (view()->exists($view)) {
-                    $html = view($view)->with(['dataTotal' => $dataTotal])->render();
-                }
-            }
-
-        }
-        return json_encode(['error' => $error, 'msg' => $msg, 'html' => $html]);
-
-    }
-
-    public function removeDiscount()
-    {
-        $html = '';
-        //destroy discount
-        $totalMethod = session('totalMethod', []);
-        unset($totalMethod[$this->plugin->configKey]);
-        session(['totalMethod' => $totalMethod]);
-
-        $objects = ShopOrderTotal::getObjectOrderTotal();
-        $dataTotal = ShopOrderTotal::processDataTotal($objects);
-        $subPath = 'common.shop_render_total';
-        $view = gp247_shop_process_view($this->GP247TemplatePath,$subPath);
-        if (view()->exists($view)) {
-            $html = view($view)->with(['dataTotal' => $dataTotal])->render();
-        }
-        return json_encode(['html' => $html]);
-    }
-    
 }
