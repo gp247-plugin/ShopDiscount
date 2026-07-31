@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin format 1.0
+ * Plugin format 2.0
  */
 #App\GP247\Plugins\ShopDiscount\AppConfig.php
 namespace App\GP247\Plugins\ShopDiscount;
@@ -12,8 +12,9 @@ use GP247\Core\Models\AdminHome;
 use GP247\Core\ExtensionConfigDefault;
 use GP247\Shop\Models\ShopCurrency;
 use GP247\Core\Models\AdminMenu;
+use GP247\Shop\Front\Contracts\CheckoutTotalMethod;
 use Illuminate\Support\Facades\DB;
-class AppConfig extends ExtensionConfigDefault
+class AppConfig extends ExtensionConfigDefault implements CheckoutTotalMethod
 {
     public function __construct()
     {
@@ -138,7 +139,7 @@ class AppConfig extends ExtensionConfigDefault
             ->where('key', $this->configKey)
             ->update(['value' => self::OFF]);
         if (!$process) {
-            $return = ['error' => 1, 'msg' => 'Error disable'];
+            $return = ['error' => 1, 'msg' => gp247_language_render('admin.extension.action_error', ['action' => 'Disable'])];
         }
 
         //Admin config home
@@ -163,11 +164,69 @@ class AppConfig extends ExtensionConfigDefault
     }
 
 
-    // Process when click button plugin in admin    
-    
+    // Process when click button plugin in admin
+
     public function clickApp()
     {
         return redirect()->route('admin_discount.index');
+    }
+
+    /**
+     * Apply a coupon at checkout (CheckoutTotalMethod contract, L2).
+     * Reuses FrontController::check() for validation, then registers the code in
+     * session('totalMethod') so ShopOrderTotal/getInfo() add the discount line.
+     * Returns the result instead of throwing so the wizard can show feedback.
+     *
+     * @param array<string, mixed> $payload Sanitised input, expects ['code' => string].
+     * @return array{error: int, msg?: string}
+     *
+     * @aidlc-unit storefront
+     * @aidlc-story US-LW-006
+     * @aidlc-adr ADR-storefront-checkout-total-method-contract
+     */
+    public function checkoutApply(array $payload): array
+    {
+        $code = trim((string) ($payload['code'] ?? ''));
+        if ($code === '') {
+            return ['error' => 1, 'msg' => gp247_language_render('cart.coupon_empty')];
+        }
+
+        $uID   = customer()->id ?? 0;
+        $check = (new FrontController)->check($code, $uID);
+        if (!empty($check['error'])) {
+            return ['error' => 1, 'msg' => $check['msg']];
+        }
+
+        // WHY: getInfo() computes the value for both 'point' and 'percent' types from
+        // the stored code; registering the key is enough — recompute happens in the wizard.
+        $totalMethod = session('totalMethod', []);
+        $totalMethod[$this->configKey] = $code;
+        session(['totalMethod' => $totalMethod]);
+
+        return ['error' => 0, 'msg' => gp247_language_render($this->appPath.'::lang.process.completed')];
+    }
+
+    /**
+     * Remove the applied coupon from the order (CheckoutTotalMethod contract, L2).
+     *
+     * @return void
+     */
+    public function checkoutRemove(): void
+    {
+        $totalMethod = session('totalMethod', []);
+        unset($totalMethod[$this->configKey]);
+        session(['totalMethod' => $totalMethod]);
+    }
+
+    /**
+     * Storefront fragment rendered inside the checkout total-method zone
+     * (CheckoutTotalMethod contract, L3).
+     *
+     * @return string|null
+     */
+    public function checkoutView(): ?string
+    {
+        return $this->appPath.'::checkout';
     }
 
     /**

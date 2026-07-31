@@ -1,3 +1,7 @@
+{{-- LEGACY (v1 total-method render, headless/API only). The 2.0 checkout renders the
+     coupon UI via Views/checkout.blade.php through the CheckoutTotalMethod contract
+     (ADR-storefront-checkout-total-method-contract). Kept for backward-compat with the
+     discount.process/discount.remove HTTP endpoints; not included by the 2.0 wizard. --}}
 <div class="row">
     <div class="form-group col-md-12">
       <label class="control-label" for="inputGroupSuccess3"><i class="fa fa-exchange" aria-hidden="true"></i> {{ gp247_language_render('cart.coupon') }}

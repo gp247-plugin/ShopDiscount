@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\GP247\Plugins\ShopDiscount\Admin\Livewire\DiscountManager;
 
 $config = file_get_contents(__DIR__.'/gp247.json');
 $config = json_decode($config, true);
@@ -20,25 +21,23 @@ if(gp247_extension_check_active($config['configGroup'], $config['configKey'])) {
         }
     );
 
+    // v2 (Livewire + TailAdmin) — replaces the legacy AdminLTE controller, whose
+    // views extended the now-removed `gp247-core::layout` / `gp247-core::screen.list`.
+    // Route names are kept identical to v1 for back-compat: the AdminMenu row
+    // installed by AppConfig::install() references `route_admin::admin_discount.index`.
+    // The single DiscountManager component drives list + create + edit (two-panel).
     Route::group(
         [
             'prefix' => GP247_ADMIN_PREFIX.'/discount',
             'middleware' => GP247_ADMIN_MIDDLEWARE,
-            'namespace' => '\App\GP247\Plugins\ShopDiscount\Admin',
-        ], 
+        ],
         function () {
-            Route::get('/', 'AdminController@index')
-            ->name('admin_discount.index');
-            Route::get('create', 'AdminController@create')
+            Route::get('/', DiscountManager::class)
+                ->name('admin_discount.index');
+            Route::get('/create', DiscountManager::class)
                 ->name('admin_discount.create');
-            Route::post('/create', 'AdminController@postCreate')
-                ->name('admin_discount.create');
-            Route::get('/edit/{id}', 'AdminController@edit')
+            Route::get('/edit/{id}', DiscountManager::class)
                 ->name('admin_discount.edit');
-            Route::post('/edit/{id}', 'AdminController@postEdit')
-                ->name('admin_discount.edit');
-            Route::post('/delete', 'AdminController@deleteList')
-                ->name('admin_discount.delete');
         }
     );
 }
