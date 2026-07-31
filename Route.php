@@ -7,20 +7,6 @@ $config = json_decode($config, true);
 
 if(gp247_extension_check_active($config['configGroup'], $config['configKey'])) {
 
-    Route::group(
-        [
-            'middleware' => GP247_FRONT_MIDDLEWARE,
-            'prefix'    => 'plugin/discount',
-            'namespace' => 'App\GP247\Plugins\ShopDiscount\Controllers',
-        ],
-        function () {
-            Route::post('/discount_process', 'FrontController@useDiscount')
-                ->name('discount.process');
-            Route::post('/discount_remove', 'FrontController@removeDiscount')
-                ->name('discount.remove');
-        }
-    );
-
     // v2 (Livewire + TailAdmin) — replaces the legacy AdminLTE controller, whose
     // views extended the now-removed `gp247-core::layout` / `gp247-core::screen.list`.
     // Route names are kept identical to v1 for back-compat: the AdminMenu row
