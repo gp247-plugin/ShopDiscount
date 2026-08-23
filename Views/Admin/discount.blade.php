@@ -24,18 +24,23 @@
                 wire:model="form.code" :error="$errors->first('form.code')"
                 :help="gp247_language_render($appPath.'::lang.admin.code_helper')" required />
 
+            {{-- WHY: reward is a money amount for "point" coupons (stored in the base
+                 currency) but a plain percentage for "percent" coupons, so the helper
+                 hint switches unit accordingly. The type radios below use wire:model.live
+                 so this server-rendered hint updates the moment the type changes. --}}
             <x-gp247::input type="number" step="0.01" min="0" :label="gp247_language_render($appPath.'::lang.reward')"
-                name="reward" wire:model="form.reward" :error="$errors->first('form.reward')" required />
+                name="reward" wire:model="form.reward" :error="$errors->first('form.reward')"
+                :help="($form['type'] ?? 'point') === 'percent' ? '%' : gp247_money_hint()" required />
 
             {{-- type: point / percent --}}
             <div>
                 <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-200">{{ gp247_language_render($appPath.'::lang.type') }}</label>
                 <div class="flex items-center gap-6">
                     <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-                        <input type="radio" value="point" wire:model="form.type" class="text-blue-600 focus:ring-blue-500"> Point
+                        <input type="radio" value="point" wire:model.live="form.type" class="text-blue-600 focus:ring-blue-500"> Point
                     </label>
                     <label class="inline-flex items-center gap-2 text-sm text-gray-700 dark:text-gray-200">
-                        <input type="radio" value="percent" wire:model="form.type" class="text-blue-600 focus:ring-blue-500"> Percent (%)
+                        <input type="radio" value="percent" wire:model.live="form.type" class="text-blue-600 focus:ring-blue-500"> Percent (%)
                     </label>
                 </div>
                 @error('form.type')<p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>@enderror
@@ -99,7 +104,18 @@
             @foreach ($rows as $row)
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 {{ (string) $row->id === (string) $editingId ? 'bg-blue-50 dark:bg-blue-900/30' : '' }}" wire:key="discount-{{ $row->id }}">
                     <td class="px-4 py-3 text-sm font-medium text-gray-800 dark:text-gray-100">{{ $row->code }}</td>
-                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">{{ $row->reward }}</td>
+                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">
+                        @php($baseCode = gp247_base_currency_code())
+                        @if ($row->type === 'percent')
+                            {{ $row->reward }}%
+                        @elseif ($baseCode)
+                            {{-- Point reward is a fixed amount stored in the base currency; render
+                                 with the base currency's symbol/format without converting it. --}}
+                            {{ gp247_currency_render_symbol((float) $row->reward, $baseCode) }}
+                        @else
+                            {{ $row->reward }}
+                        @endif
+                    </td>
                     <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">{{ $row->type === 'point' ? 'Point' : '%' }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">{{ $row->used }}/{{ $row->limit }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-300">{{ $row->expires_at ? \Illuminate\Support\Carbon::parse($row->expires_at)->format('Y-m-d') : '—' }}</td>
