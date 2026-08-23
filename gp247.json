@@ -8,8 +8,8 @@
     "configCode": "Total",
     "configKey": "ShopDiscount",
     "version": "2.0.1",
-    "requireCore": ["2.0"],
+    "requireCore": ["2.1"],
     "requireUpdateFrom": "2.0",
-    "requirePackages": ["gp247/shop"],
-    "requireExtensions": []
+    "requireComposerPackages": ["gp247/shop"],
+    "requireGp247Extensions": []
 }
