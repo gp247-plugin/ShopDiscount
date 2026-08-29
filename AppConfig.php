@@ -285,7 +285,14 @@ class AppConfig extends ExtensionConfigDefault implements CheckoutTotalMethod
                 'version' => $this->version,
                 'auth' => $this->auth,
                 'link' => $this->link,
-                'value' => ($value > $subtotalWithTax) ? -$subtotalWithTax : -$value,
+                // WHY positive: total-method plugins return the MAGNITUDE of the
+                // deduction; the sign belongs to ShopOrderTotal::SIGN_MAP, which applies
+                // it once for every consumer (ADR shop-admin_money-sign-convention D5).
+                // Returning -$value here is what used to put a negative number into
+                // shop_order.discount, leaving the admin screens disagreeing about
+                // whether a discount subtracts or adds (RISK-BIZ-order-sign-split).
+                // The cap stays: never discount more than the cart is worth.
+                'value' => ($value > $subtotalWithTax) ? $subtotalWithTax : $value,
                 'appPath' => $this->appPath,
                 'store' => $dataStore
             );
