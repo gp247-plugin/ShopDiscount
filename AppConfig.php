@@ -259,12 +259,18 @@ class AppConfig extends ExtensionConfigDefault implements CheckoutTotalMethod
         $check = (new FrontController)->check($discount, $uID);
 
         if (!empty($discount) && !$check['error']) {
-            $subtotalWithTax = ShopCurrency::sumCartCheckout()['subTotalWithTax'] ?? null;
-            if (!$subtotalWithTax) {
+            // Percentage off the PRE-TAX subtotal: a discount reduces the taxable base,
+            // so taking the percentage off a tax-inclusive figure would tax the customer
+            // on the part they were forgiven (audit F5, ADR shop-admin_order-discount-pre-tax D1).
+            $subtotal = ShopCurrency::sumCartCheckout()['subTotal'] ?? null;
+            if (!$subtotal) {
                 return $arrData;
             }
             if ($check['content']['type'] == 'percent') {
-                $value = floor($subtotalWithTax * $check['content']['reward'] / 100);
+                // round(), not floor(). floor() quietly gave the customer LESS than the
+                // advertised percentage — a 10% coupon on 236 handed back 23 instead of
+                // 23.60, every order, for as long as it has existed (D2).
+                $value = round($subtotal * $check['content']['reward'] / 100, 2);
             } else {
                 $value = gp247_currency_value($check['content']['reward']);
             }
@@ -291,8 +297,10 @@ class AppConfig extends ExtensionConfigDefault implements CheckoutTotalMethod
                 // Returning -$value here is what used to put a negative number into
                 // shop_order.discount, leaving the admin screens disagreeing about
                 // whether a discount subtracts or adds (RISK-BIZ-order-sign-split).
-                // The cap stays: never discount more than the cart is worth.
-                'value' => ($value > $subtotalWithTax) ? $subtotalWithTax : $value,
+                // The cap stays, now against the PRE-TAX subtotal: a discount larger
+                // than the goods is a data-entry accident, not a generous offer, and an
+                // order must never total less than nothing (F17).
+                'value' => ($value > $subtotal) ? $subtotal : $value,
                 'appPath' => $this->appPath,
                 'store' => $dataStore
             );
