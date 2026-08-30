@@ -4,7 +4,7 @@
 
 ## Introduction
 ShopDiscount is a plugin that lets you create and manage **discount codes (coupons)** for an online store
-running on GP247 / S-Cart 2.0. An administrator creates the discount codes; customers enter a code at the
+running on GP247 / S-Cart 3.0. An administrator creates the discount codes; customers enter a code at the
 **checkout step** to get money off their order. This document is written for shop owners and admins (no
 coding required): by the end you will know how to install it, create discount codes, and understand how
 customers use them.
@@ -24,9 +24,9 @@ customers use them.
 ## Requirements
 | Component | Requirement |
 | --- | --- |
-| GP247 Core | **2.0 or later** |
+| GP247 Core | **3.0** |
 | Required package | **gp247/shop** (for selling websites) |
-| Plugin version | 2.0 |
+| Plugin version | 3.0 |
 
 > Without `gp247/shop` installed, the plugin will not work correctly (it serves the shopping features).
 
@@ -118,10 +118,20 @@ Yes. ShopDiscount serves shopping features, so `gp247/shop` **must** be installe
 **Q9: What does "Login require" mean?**
 It means only **signed-in** customers can use that code, and each account can use that code **once**.
 
-**Q10: I'm on an old (1.x) version — how do I upgrade?**
-This 2.0 release targets GP247 Core 2.0. GP247 2.0 does not support a direct upgrade from 1.x — install it
-on a Core 2.0 site. The code data structure is kept the same as before.
+**Q10: How do I upgrade to the 3.0 version?**
+This 3.0 release targets **GP247 Core 3.0**. If you are on a 2.x plugin, you can update in place: open
+admin → **Plugin → From library**, click **Check update**, then click **Update 3.0** (the plugin allows a
+direct update from 2.0 onward — see `requireUpdateFrom`). The code data structure is kept the same, so your
+existing discount codes are preserved. If you are still on an old 1.x version, install 3.0 fresh on a Core
+3.0 site (a direct 1.x → 3.0 upgrade is not supported).
+
+## Change history
+<!-- Only when logic/behavior changed. Newest row on top. One row per day: merge same-day changes into the existing row, never add a new row for the same date. -->
+
+| Date | GP247 version | Change |
+| --- | --- | --- |
+| 2026-08-30 | GP247 Core 3.0 | Release 3.0: targets GP247 Core 3.0 (`requireCore` 3.0); in-place update supported from plugin 2.0 onward. Feature set and data structure unchanged. |
 
 ---
 
-<sub>📅 **Last updated:** 2026-07-31 · ✍️ **Author:** GP247</sub>
+<sub>📅 **Last updated:** 2026-08-30 · ✍️ **Author:** GP247</sub>

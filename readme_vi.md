@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 ShopDiscount là plugin giúp bạn tạo và quản lý **mã giảm giá (coupon)** cho website bán hàng chạy trên
-GP247 / S-Cart 2.0. Người quản trị tạo các mã giảm giá; khách hàng nhập mã ở **bước thanh toán** để được
+GP247 / S-Cart 3.0. Người quản trị tạo các mã giảm giá; khách hàng nhập mã ở **bước thanh toán** để được
 giảm tiền cho đơn hàng. Tài liệu này dành cho chủ shop và người quản trị (không cần rành lập trình): đọc
 xong bạn sẽ biết cách cài, tạo mã giảm giá, và hiểu khách dùng mã như thế nào.
 
@@ -23,9 +23,9 @@ xong bạn sẽ biết cách cài, tạo mã giảm giá, và hiểu khách dùn
 ## Yêu cầu hệ thống
 | Thành phần | Yêu cầu |
 | --- | --- |
-| GP247 Core | **2.0 trở lên** |
+| GP247 Core | **3.0** |
 | Gói bắt buộc | **gp247/shop** (dành cho website bán hàng) |
-| Phiên bản plugin | 2.0 |
+| Phiên bản plugin | 3.0 |
 
 > Nếu website chưa cài `gp247/shop`, plugin sẽ không hoạt động đúng (nó phục vụ cho chức năng bán hàng).
 
@@ -112,10 +112,20 @@ Có. ShopDiscount phục vụ chức năng bán hàng nên **bắt buộc** webs
 **Câu 9: "Login require" nghĩa là gì?**
 Nghĩa là chỉ khách **đã đăng nhập** mới dùng được mã đó, và mỗi tài khoản chỉ dùng mã đó **một lần**.
 
-**Câu 10: Tôi đang dùng bản plugin cũ (1.x), nâng cấp thế nào?**
-Bản 2.0 này viết cho GP247 Core 2.0. GP247 2.0 không hỗ trợ nâng cấp trực tiếp từ 1.x — hãy cài trên nền
-Core 2.0. Cấu trúc dữ liệu mã vẫn giữ nguyên như trước.
+**Câu 10: Nâng cấp lên bản 3.0 thế nào?**
+Bản 3.0 này viết cho **GP247 Core 3.0**. Nếu bạn đang ở plugin 2.x, có thể cập nhật tại chỗ: vào admin →
+**Plugin → From library**, bấm **Check update**, rồi bấm **Update 3.0** (plugin cho phép cập nhật trực
+tiếp từ 2.0 trở lên — xem `requireUpdateFrom`). Cấu trúc dữ liệu mã vẫn giữ nguyên nên các mã giảm giá cũ
+được bảo toàn. Nếu bạn còn ở bản 1.x cũ, hãy cài mới bản 3.0 trên nền Core 3.0 (không hỗ trợ nâng cấp
+trực tiếp 1.x → 3.0).
+
+## Lịch sử thay đổi
+<!-- Chỉ ghi khi có thay đổi về logic/hành vi. Dòng mới nhất ở trên cùng. Mỗi ngày một dòng: cùng ngày thì gộp vào dòng có sẵn, không tách dòng mới. -->
+
+| Ngày | Phiên bản GP247 | Thay đổi |
+| --- | --- | --- |
+| 2026-08-30 | GP247 Core 3.0 | Phát hành 3.0: viết cho GP247 Core 3.0 (`requireCore` 3.0); hỗ trợ cập nhật tại chỗ từ plugin 2.0 trở lên. Tính năng và cấu trúc dữ liệu giữ nguyên. |
 
 ---
 
-<sub>📅 **Cập nhật lần cuối:** 2026-07-31 · ✍️ **Tác giả (Author):** GP247</sub>
+<sub>📅 **Cập nhật lần cuối:** 2026-08-30 · ✍️ **Tác giả (Author):** GP247</sub>
