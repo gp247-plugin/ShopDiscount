@@ -190,6 +190,8 @@ class DiscountManager extends ResourcePanel
             $discount->update($attributes);
         } else {
             $discount = ShopDiscount::createDiscountAdmin($attributes);
+            // ResourcePanel create contract: expose the new id so save() edits it in place.
+            $this->editingId = (string) $discount->id;
         }
 
         // WHY: legacy default — with no explicit store selection the discount is
