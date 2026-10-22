@@ -1,4 +1,4 @@
-> 🌐 **Ngôn ngữ:** 🇻🇳 Tiếng Việt (hiện tại) · [🇬🇧 English](./readme.md)
+> 🌐 **Ngôn ngữ:** 🇻🇳 Tiếng Việt (hiện tại) · [🇬🇧 English](./readme.md) · [🇯🇵 日本語](./readme_ja.md)
 
 # ShopDiscount — Plugin mã giảm giá (Coupon) cho GP247 / S-Cart
 
@@ -150,4 +150,4 @@ trực tiếp 1.x → 3.0).
 
 ---
 
-<sub>📅 **Cập nhật lần cuối:** 2026-09-25 · ✍️ **Tác giả (Author):** GP247</sub>
+<sub>📅 **Cập nhật lần cuối:** 2026-10-22 · ✍️ **Tác giả (Author):** GP247</sub>

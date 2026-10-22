@@ -1,4 +1,4 @@
-> 🌐 **Language:** [🇻🇳 Tiếng Việt](./readme_vi.md) · 🇬🇧 English (current)
+> 🌐 **Language:** [🇻🇳 Tiếng Việt](./readme_vi.md) · 🇬🇧 English (current) · [🇯🇵 日本語](./readme_ja.md)
 
 # ShopDiscount — Coupon / Discount plugin for GP247 / S-Cart
 
@@ -156,4 +156,4 @@ existing discount codes are preserved. If you are still on an old 1.x version, i
 
 ---
 
-<sub>📅 **Last updated:** 2026-09-25 · ✍️ **Author:** GP247</sub>
+<sub>📅 **Last updated:** 2026-10-22 · ✍️ **Author:** GP247</sub>
