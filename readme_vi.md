@@ -146,8 +146,9 @@ trực tiếp 1.x → 3.0).
 
 | Ngày | Phiên bản GP247 | Thay đổi |
 | --- | --- | --- |
+| 2026-11-04 | GP247 Core 3.10 | Bản 3.1.3: màn mã giảm giá theo kiểu chung của trang quản trị — khi đang sửa, đầu form có nút **+ Tạo mới** để quay về form trống (danh sách giữ nguyên trang); cuối form chỉ còn nút Lưu / Cập nhật (bỏ Reset, Huỷ). Cần GP247 Core 3.10 trở lên (`requireCore` 3.10). |
 | 2026-08-30 | GP247 Core 3.0 | Phát hành 3.0: viết cho GP247 Core 3.0 (`requireCore` 3.0); hỗ trợ cập nhật tại chỗ từ plugin 2.0 trở lên. Tính năng và cấu trúc dữ liệu giữ nguyên. |
 
 ---
 
-<sub>📅 **Cập nhật lần cuối:** 2026-10-22 · ✍️ **Tác giả (Author):** GP247</sub>
+<sub>📅 **Cập nhật lần cuối:** 2026-11-04 · ✍️ **Tác giả (Author):** GP247</sub>

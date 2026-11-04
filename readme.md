@@ -152,8 +152,9 @@ existing discount codes are preserved. If you are still on an old 1.x version, i
 
 | Date | GP247 version | Change |
 | --- | --- | --- |
+| 2026-11-04 | GP247 Core 3.10 | Version 3.1.3: the discount screen follows the shared admin layout — while editing, the head of the form has a **+ Create new** button that returns to an empty form (the list stays on its page); the foot of the form keeps only Save / Update (Reset and Cancel removed). Needs GP247 Core 3.10 or later (`requireCore` 3.10). |
 | 2026-08-30 | GP247 Core 3.0 | Release 3.0: targets GP247 Core 3.0 (`requireCore` 3.0); in-place update supported from plugin 2.0 onward. Feature set and data structure unchanged. |
 
 ---
 
-<sub>📅 **Last updated:** 2026-10-22 · ✍️ **Author:** GP247</sub>
+<sub>📅 **Last updated:** 2026-11-04 · ✍️ **Author:** GP247</sub>
