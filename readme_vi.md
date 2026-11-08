@@ -72,7 +72,7 @@ php artisan gp247:ext-install --type=plugin --key=ShopDiscount
 - Nếu plugin đã được cài, lệnh sẽ từ chối. Để lên bản mới, chạy `php artisan gp247:ext-update --type=plugin --key=ShopDiscount`.
 - Thêm `--json` vào cuối lệnh để nhận kết quả dạng máy đọc được (dùng cho script/CI).
 - Lệnh thay cho các bước 1–3 ở trên. Bước 4 vẫn giữ nguyên: nếu admin vẫn hiển thị cũ (chưa thấy menu **Discount**), chạy `php artisan optimize:clear`.
-- Chi tiết: [Hướng dẫn cài đặt Plugin & Template](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension_vi.md) · [Tra cứu lệnh](https://github.com/gp247net/gp247-docs/blob/main/system/command-line-reference_vi.md).
+- Chi tiết: [Hướng dẫn cài đặt Plugin & Template](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension_vi.md) · [Tra cứu lệnh](https://github.com/gp247net/gp247-docs/blob/main/cli/cli-extensions_vi.md).
 
 ## Cách dùng (1): Người quản trị tạo mã giảm giá
 1. Trong admin, mở menu **Discount** (Coupon/Discount).

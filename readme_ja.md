@@ -72,7 +72,7 @@ php artisan gp247:ext-install --type=plugin --key=ShopDiscount
 - プラグインがすでにインストール済みの場合、コマンドは拒否します。新しいバージョンに更新するには `php artisan gp247:ext-update --type=plugin --key=ShopDiscount` を実行してください。
 - コマンドの末尾に `--json` を付けると、機械可読な形式で結果を受け取れます（スクリプト／CI 用）。
 - このコマンドは上記の手順 1〜3 の代わりになります。手順 4 はそのまま必要です：admin の表示が古いままの場合（**Discount** メニューがまだ表示されない場合）は、`php artisan optimize:clear` を実行してください。
-- 詳細：[プラグインとテンプレートのインストールガイド](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension.md) · [コマンドリファレンス](https://github.com/gp247net/gp247-docs/blob/main/system/command-line-reference.md)。
+- 詳細：[プラグインとテンプレートのインストールガイド](https://github.com/gp247net/gp247-docs/blob/main/extension/install-extension.md) · [コマンドリファレンス](https://github.com/gp247net/gp247-docs/blob/main/cli/cli-extensions_ja.md)。
 
 ## 使い方 (1)：管理者が割引コードを作成する
 1. admin で **Discount**（Coupon/Discount）メニューを開きます。
